@@ -976,12 +976,10 @@ async function submitForm(e) {
   try {
 
     const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbxyfAqkWXLHuio8nYztzFsGdQoC8NUtGBIvhsVCpkvCfSDMiTigPvTRwnV86gAOJXhV/exec",
+      "https://script.google.com/macros/s/AKfycbyDSUwyMnHdA-dy2m6Hz3J7N_KRqqCZyJGoevBwnd4O8XFEHq7cgTdy0IJjxvl8jsWV/exec",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        mode: "no-cors",
         body: new URLSearchParams(data)
       }
     );
