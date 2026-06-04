@@ -872,21 +872,145 @@ function updateProgress() {
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────────────────────
-function submitForm(e) {
+async function submitForm(e) {
+
   e.preventDefault();
+
   let rubricFilled = true;
+
   rubricData.forEach(item => {
-    if (!document.querySelector(`input[name="${item.id}"]:checked`)) rubricFilled = false;
+    if (!document.querySelector(`input[name="${item.id}"]:checked`)) {
+      rubricFilled = false;
+    }
   });
-  if(!rubricFilled){
+
+  if (!rubricFilled) {
     alert('Please rate all 10 criteria in Section B before submitting.');
-    document.getElementById('rubricItems').scrollIntoView({behavior:'smooth'});
     return;
   }
-  document.getElementById('feedbackForm').style.display = 'none';
-  document.getElementById('progressWrap').style.display = 'none';
-  document.getElementById('successScreen').style.display = 'block';
-  window.scrollTo({top:0,behavior:'smooth'});
+
+  const submitBtn = document.querySelector('.submit-btn');
+
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = "Submitting...";
+
+  let totalScore = 0;
+
+  rubricData.forEach(item => {
+    const checked =
+      document.querySelector(`input[name="${item.id}"]:checked`);
+
+    if (checked) {
+      totalScore += Number(checked.value);
+    }
+  });
+
+  let grade = "";
+
+  if (totalScore >= 46)
+    grade = "A+ Outstanding";
+  else if (totalScore >= 40)
+    grade = "A Excellent";
+  else if (totalScore >= 33)
+    grade = "B Good";
+  else if (totalScore >= 25)
+    grade = "C Satisfactory";
+  else
+    grade = "D Needs Improvement";
+
+  const data = {};
+
+  data.name =
+    document.querySelector('[name="name"]').value;
+
+  data.designation =
+    document.querySelector('[name="designation"]').value;
+
+  data.school =
+    document.querySelector('[name="school"]').value;
+
+  data.date =
+    document.querySelector('[name="date"]').value;
+
+  data.session =
+    document.querySelector('[name="session"]').value;
+
+  data.day =
+    document.querySelector('[name="day"]').value;
+
+  data.topic =
+    document.querySelector('[name="topic"]').value;
+
+  data.trainer =
+    document.querySelector('[name="trainer"]').value;
+
+  data.totalScore = totalScore;
+  data.grade = grade;
+
+  rubricData.forEach(item => {
+    data[item.id] =
+      document.querySelector(
+        `input[name="${item.id}"]:checked`
+      )?.value || "";
+  });
+
+  for(let i=0;i<8;i++){
+    data["qc"+i] =
+      document.getElementById("qc"+i)?.value || "";
+  }
+
+  trainerData.forEach(item=>{
+    data["trainer_"+item.code] =
+      document.getElementById(
+        "trainer_"+item.code
+      )?.value || "";
+  });
+
+  openEndedData.forEach(item=>{
+    data[item.id] =
+      document.querySelector(
+        `[name="${item.id}"]`
+      )?.value || "";
+  });
+
+  try {
+
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbxqWWh2w1D19WxxnX-R7ouobKWyE-f5kd6ehklnwWCgqqGe5OHC-mbsSurnKJSZw0eU/exec",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      }
+    );
+
+    document.getElementById('feedbackForm').style.display = 'none';
+
+    document.getElementById('progressWrap').style.display = 'none';
+
+    document.getElementById('successScreen').style.display = 'block';
+
+    window.scrollTo({
+      top:0,
+      behavior:'smooth'
+    });
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Submission failed. Please try again."
+    );
+
+    submitBtn.disabled = false;
+
+    submitBtn.innerHTML =
+      "✦ Submit Feedback";
+  }
 }
 
 function resetForm() {
