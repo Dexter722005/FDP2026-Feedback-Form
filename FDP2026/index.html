@@ -1,1 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FDP-2026 Session Feedback Rubric — ECMS MPS Schools, Jaipur</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:        #00897B;
+    --teal-dark:   #00695C;
+    --teal-light:  #E0F2F1;
+    --teal-pale:   #F0FAFA;
+    --navy:        #1A3C6E;
+    --navy-light:  #EBF5FB;
+    --gold:        #D4A04A;
+    --gold-light:  #FFF8E8;
+    --red:         #C0392B;
+    --red-light:   #FDECEA;
+    --orange:      #E67E22;
+    --orange-light:#FFF3E0;
+    --yellow:      #F39C12;
+    --yellow-light:#FFFDE7;
+    --green:       #1E8449;
+    --green-light: #E8F5E9;
+    --blue:        #1A3C6E;
+    --blue-light:  #E3F2FD;
+    --purple:      #7D3C98;
+    --amber:       #C55A11;
+    --bg:          #F4F6F9;
+    --card:        #FFFFFF;
+    --text:        #1A1A1A;
+    --muted:       #6B7280;
+    --border:      #E5E7EB;
+    --radius:      12px;
+    --shadow:      0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+    --shadow-lg:   0 8px 32px rgba(0,0,0,.10);
+  }
 
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+
+  /* ── HEADER ─────────────────────────────────────────────────────────── */
+  .form-header {
+    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 60%, #26A69A 100%);
+    color: #fff;
+    padding: 32px 24px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .form-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 50%, rgba(255,255,255,.08) 0%, transparent 70%);
+  }
+  .form-header::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--gold), #FAD080, var(--gold));
+  }
+  .header-inner { max-width: 780px; margin: 0 auto; position: relative; }
+  .header-org {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: rgba(255,255,255,.7);
+    margin-bottom: 10px;
+  }
+  .header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 400; line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .header-sub {
+    font-size: 14px; color: rgba(255,255,255,.8);
+    margin-bottom: 18px;
+  }
+  .mandatory-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.25);
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; color: #fff;
+    backdrop-filter: blur(4px);
+  }
+  .mandatory-badge::before { content: '⚠'; font-size: 14px; }
+
+  /* ── FORM BODY ───────────────────────────────────────────────────────── */
+  .form-body { max-width: 780px; margin: 0 auto; padding: 24px 16px 0; }
+
+  /* ── NOTICE BOX ─────────────────────────────────────────────────────── */
+  .notice {
+    background: #FFF8E8;
+    border-left: 4px solid var(--amber);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: 13.5px;
+    color: #5D3A0A;
+    line-height: 1.6;
+  }
+  .notice strong { color: var(--amber); }
+
+  /* ── CARD ────────────────────────────────────────────────────────────── */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 14px 22px 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; color: #fff;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .card-header.teal   { background: var(--teal-dark); }
+  .card-header.navy   { background: var(--navy); }
+  .card-header.purple { background: var(--purple); }
+  .card-header.amber  { background: var(--amber); }
+  .card-header.green  { background: var(--green); }
+  .card-header.blue   { background: #2980B9; }
+  .card-body { padding: 22px; }
+
+  /* ── INFO GRID ───────────────────────────────────────────────────────── */
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:560px){ .info-grid { grid-template-columns: 1fr; } }
+
+  .field-group { display: flex; flex-direction: column; gap: 6px; }
+  .field-label {
+    font-size: 12.5px; font-weight: 600; color: var(--navy);
+    text-transform: uppercase; letter-spacing: .5px;
+  }
+  .field-label .req { color: var(--red); margin-left: 2px; }
+  .field-input, .field-select, .field-textarea {
+    width: 100%; padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; color: var(--text);
+    background: #FAFBFC;
+    transition: border-color .15s, box-shadow .15s;
+    outline: none;
+  }
+  .field-input:focus, .field-select:focus, .field-textarea:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(0,137,123,.1);
+    background: #fff;
+  }
+  .field-select { cursor: pointer; }
+  .field-textarea { resize: vertical; min-height: 80px; }
+
+  /* ── RUBRIC TABLE ────────────────────────────────────────────────────── */
+  .rubric-hint {
+    font-size: 12.5px; color: var(--muted); margin-bottom: 16px;
+    background: var(--teal-pale); padding: 10px 14px;
+    border-radius: 8px; line-height: 1.5;
+  }
+  .rubric-item {
+    margin-bottom: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+    transition: box-shadow .15s;
+  }
+  .rubric-item:hover { box-shadow: 0 2px 12px rgba(0,137,123,.1); }
+  .rubric-item-header {
+    padding: 12px 16px;
+    background: var(--navy-light);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .rubric-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--navy); color: #fff;
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .rubric-title { font-size: 14.5px; font-weight: 600; color: var(--navy); line-height: 1.3; }
+  .rubric-subtitle { font-size: 12.5px; color: var(--muted); margin-top: 3px; font-style: italic; }
+  .rubric-options { display: grid; grid-template-columns: repeat(5,1fr); }
+  @media(max-width:600px){ .rubric-options { grid-template-columns: 1fr; } }
+  .rubric-option { cursor: pointer; }
+  .rubric-option input[type="radio"] { display: none; }
+  .rubric-option label {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 10px 8px; gap: 5px; cursor: pointer;
+    border-right: 1px solid var(--border);
+    transition: background .12s;
+    min-height: 72px; justify-content: center;
+  }
+  .rubric-option:last-child label { border-right: none; }
+  .rubric-option label:hover { background: #f9f9f9; }
+  .rubric-option input:checked + label { font-weight: 600; }
+
+  .rubric-option.r1 input:checked+label { background: var(--red-light); }
+  .rubric-option.r2 input:checked+label { background: var(--orange-light); }
+  .rubric-option.r3 input:checked+label { background: var(--yellow-light); }
+  .rubric-option.r4 input:checked+label { background: var(--green-light); }
+  .rubric-option.r5 input:checked+label { background: var(--blue-light); }
+
+  .rubric-score {
+    font-size: 18px; font-weight: 700;
+    display: block; line-height: 1;
+  }
+  .r1 .rubric-score { color: var(--red); }
+  .r2 .rubric-score { color: var(--orange); }
+  .r3 .rubric-score { color: var(--yellow); }
+  .r4 .rubric-score { color: var(--green); }
+  .r5 .rubric-score { color: var(--blue); }
+
+  .rubric-grade { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+  .r1 .rubric-grade { color: var(--red); }
+  .r2 .rubric-grade { color: var(--orange); }
+  .r3 .rubric-grade { color: var(--yellow); }
+  .r4 .rubric-grade { color: var(--green); }
+  .r5 .rubric-grade { color: var(--blue); }
+
+  .rubric-desc { font-size: 11px; color: var(--muted); text-align: center; font-style: italic; line-height: 1.3; }
+
+  /* ── SCORE DISPLAY ───────────────────────────────────────────────────── */
+  .score-display {
+    background: var(--teal-pale);
+    border: 1.5px solid var(--teal);
+    border-radius: 10px;
+    padding: 18px 22px;
+    display: flex; align-items: center; gap: 20px;
+    flex-wrap: wrap;
+  }
+  .score-big {
+    font-family: 'DM Serif Display', serif;
+    font-size: 48px; color: var(--teal-dark);
+    line-height: 1;
+  }
+  .score-denom { font-size: 20px; color: var(--muted); }
+  .score-grade-badge {
+    padding: 6px 18px; border-radius: 20px;
+    font-size: 15px; font-weight: 700;
+    display: none;
+  }
+  .score-bar-wrap { flex: 1; min-width: 160px; }
+  .score-bar {
+    height: 10px; background: var(--border);
+    border-radius: 10px; overflow: hidden; margin-bottom: 6px;
+  }
+  .score-bar-fill {
+    height: 100%; width: 0%;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--teal), var(--navy));
+    transition: width .4s cubic-bezier(.4,0,.2,1);
+  }
+  .score-pct { font-size: 13px; color: var(--muted); }
+
+  /* ── QUICK CHECK ─────────────────────────────────────────────────────── */
+  .qcheck-item {
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: center; gap: 16px;
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background .12s;
+  }
+  .qcheck-item:last-child { border-bottom: none; }
+  .qcheck-item:hover { background: #FAFBFC; }
+  .qcheck-num {
+    font-size: 12px; font-weight: 700; color: var(--teal);
+    margin-right: 8px;
+  }
+  .qcheck-text { font-size: 14px; color: var(--text); }
+  .qcheck-btns { display: flex; gap: 6px; }
+  .qcheck-btn {
+    padding: 6px 12px; border-radius: 20px; cursor: pointer;
+    font-size: 12px; font-weight: 600; letter-spacing: .3px;
+    border: 1.5px solid var(--border);
+    background: #fff; color: var(--muted);
+    transition: all .12s;
+  }
+  .qcheck-btn:hover { transform: translateY(-1px); }
+  .qcheck-btn.yes  { border-color: var(--green);  color: var(--green); }
+  .qcheck-btn.no   { border-color: var(--red);    color: var(--red); }
+  .qcheck-btn.part { border-color: var(--orange); color: var(--orange); }
+  .qcheck-btn.yes.active  { background: var(--green);  color: #fff; }
+  .qcheck-btn.no.active   { background: var(--red);    color: #fff; }
+  .qcheck-btn.part.active { background: var(--orange); color: #fff; }
+
+  /* ── TRAINER RATING ──────────────────────────────────────────────────── */
+  .trainer-item {
+    display: grid; grid-template-columns: 40px 1fr auto;
+    align-items: center; gap: 14px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .trainer-item:last-child { border-bottom: none; }
+  .trainer-code {
+    width: 32px; height: 32px; border-radius: 6px;
+    background: var(--amber); color: #fff;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .trainer-label { font-size: 14px; color: var(--text); }
+  .star-group { display: flex; gap: 4px; }
+  .star-btn {
+    width: 32px; height: 32px; border-radius: 6px;
+    border: 1.5px solid var(--border);
+    background: #fff; cursor: pointer;
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .1s;
+  }
+  .star-btn:hover { transform: scale(1.1); }
+  .star-btn.s1.a { background: var(--red-light);    border-color: var(--red);    color: var(--red); }
+  .star-btn.s2.a { background: var(--orange-light);  border-color: var(--orange);  color: var(--orange); }
+  .star-btn.s3.a { background: var(--yellow-light);  border-color: var(--yellow);  color: var(--yellow); }
+  .star-btn.s4.a { background: var(--green-light);   border-color: var(--green);   color: var(--green); }
+  .star-btn.s5.a { background: var(--blue-light);    border-color: var(--blue);    color: var(--blue); }
+
+  /* ── OPEN-ENDED ──────────────────────────────────────────────────────── */
+  .open-item { margin-bottom: 16px; }
+  .open-label {
+    font-size: 14px; font-weight: 600; color: var(--purple);
+    margin-bottom: 8px; display: flex; gap: 8px;
+  }
+  .open-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--purple); color: #fff;
+    font-size: 12px; font-weight: 700; flex-shrink: 0;
+  }
+
+  /* ── SUBMIT SECTION ──────────────────────────────────────────────────── */
+  .submit-section { text-align: center; padding: 10px 0; }
+  .submit-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 40px; border-radius: 50px;
+    background: linear-gradient(135deg, var(--teal-dark), var(--teal));
+    color: #fff; font-family: 'DM Sans', sans-serif;
+    font-size: 16px; font-weight: 600;
+    border: none; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,137,123,.35);
+    transition: all .2s;
+  }
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0,137,123,.45);
+  }
+  .submit-btn:active { transform: translateY(0); }
+
+  /* ── SUCCESS ─────────────────────────────────────────────────────────── */
+  .success-screen {
+    display: none;
+    max-width: 780px; margin: 40px auto; padding: 0 16px;
+    text-align: center;
+  }
+  .success-card {
+    background: #fff; border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    padding: 52px 40px;
+  }
+  .success-icon {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: var(--green-light);
+    margin: 0 auto 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+  }
+  .success-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px; color: var(--green);
+    margin-bottom: 10px;
+  }
+  .success-sub { font-size: 15px; color: var(--muted); line-height: 1.6; }
+
+  /* ── PROGRESS BAR ────────────────────────────────────────────────────── */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,.95);
+    backdrop-filter: blur(8px);
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-inner { max-width: 780px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+  .progress-track { flex: 1; height: 6px; background: var(--border); border-radius: 6px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--teal); border-radius: 6px; transition: width .3s; }
+  .progress-pct { font-size: 12px; font-weight: 600; color: var(--teal); white-space: nowrap; }
+
+  /* ── GRADING SCALE ───────────────────────────────────────────────────── */
+  .grade-scale {
+    display: grid; grid-template-columns: repeat(5,1fr);
+    gap: 6px; margin-top: 12px;
+    font-size: 12px; text-align: center;
+  }
+  @media(max-width:500px){ .grade-scale { grid-template-columns: 1fr 1fr; } }
+  .grade-chip {
+    padding: 8px 4px; border-radius: 8px;
+    font-weight: 700; line-height: 1.3;
+  }
+  .gc-a-plus { background: var(--blue-light);   color: var(--blue); }
+  .gc-a      { background: var(--green-light);  color: var(--green); }
+  .gc-b      { background: var(--yellow-light); color: var(--yellow); }
+  .gc-c      { background: var(--orange-light); color: var(--orange); }
+  .gc-d      { background: var(--red-light);    color: var(--red); }
+
+  /* ── FOOTER ──────────────────────────────────────────────────────────── */
+  .form-footer {
+    max-width: 780px; margin: 0 auto;
+    text-align: center; padding: 24px 16px 0;
+    font-size: 12px; color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY PROGRESS -->
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-inner">
+    <span style="font-size:12px;font-weight:600;color:var(--muted);">FDP-2026 Feedback</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <span class="progress-pct" id="progressPct">0%</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="form-header">
+  <div class="header-inner">
+    <div class="header-org">ECMS — MPS Schools, Jaipur &nbsp;|&nbsp; CBP-2026</div>
+    <div class="header-title">FDP-2026 Session Feedback Rubric</div>
+    <div class="header-sub">Faculty Development Programme &nbsp;|&nbsp; 15–20 June 2026</div>
+    <div class="mandatory-badge">Mandatory after every session</div>
+  </div>
+</div>
+
+<!-- MAIN FORM -->
+<form id="feedbackForm" onsubmit="submitForm(event)">
+<div class="form-body">
+
+  <!-- NOTICE -->
+  <div class="notice">
+    <strong>⚠ Mandatory:</strong> This feedback must be submitted immediately after <em>every</em> session. Your honest, specific feedback directly shapes the quality of FDP-2026. This form is <strong>confidential</strong> and used solely for programme improvement and trainer recognition.
+  </div>
+
+  <!-- SECTION A — PARTICIPANT INFO -->
+  <div class="card">
+    <div class="card-header teal">
+      <span>A</span> Participant &amp; Session Information
+    </div>
+    <div class="card-body">
+      <div class="info-grid">
+        <div class="field-group">
+          <label class="field-label">Participant Name <span class="req">*</span></label>
+          <input class="field-input" type="text" required placeholder="Full name" name="name">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Designation / Subject <span class="req">*</span></label>
+          <input class="field-input" type="text" required placeholder="e.g. PGT Mathematics" name="designation">
+        </div>
+        <div class="field-group">
+          <label class="field-label">School / Branch <span class="req">*</span></label>
+          <select class="field-select" required name="school">
+            <option value="">Select your school</option>
+            <option>MPS Jawahar Nagar</option>
+            <option>MPS Tilak Nagar</option>
+            <option>MPS Pratap Nagar</option>
+            <option>MPS International</option>
+            <option>MPS Kalwar Road</option>
+            <option>MPS Ajmer Road (Bagru)</option>
+            <option>MGPS Vidhyadhar Nagar</option>
+            <option>MBV Chaura Rasta</option>
+            <option>MPS Sanskriti Banipark</option>
+            <option>MPS Sanskriti Jagatpura</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Date of Session <span class="req">*</span></label>
+          <input class="field-input" type="date" required name="date" min="2026-06-15" max="2026-06-20">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Session <span class="req">*</span></label>
+          <select class="field-select" required name="session">
+            <option value="">Select session</option>
+            <option>Session 1 (8:30 – 11:00 AM)</option>
+            <option>Session 2 (11:40 AM – 2:10 PM)</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Day <span class="req">*</span></label>
+          <select class="field-select" required name="day">
+            <option value="">Select day</option>
+            <option>Monday, 15 June 2026</option>
+            <option>Tuesday, 16 June 2026</option>
+            <option>Wednesday, 17 June 2026</option>
+            <option>Thursday, 18 June 2026</option>
+            <option>Friday, 19 June 2026</option>
+            <option>Saturday, 20 June 2026</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Session Topic <span class="req">*</span></label>
+          <select class="field-select" required name="topic">
+            <option value="">Select session topic</option>
+            <optgroup label="Day 1 — Monday, 15 June">
+              <option>NEP 2020 — Key Shifts & Classroom Implementation</option>
+              <option>Mental Health Awareness for Educators</option>
+              <option>POCSO, JJ Act & POSH — Legal Framework for Schools</option>
+              <option>Special Education Needs: Awareness & Strategies</option>
+              <option>Creating a Classroom Culture of Student Responsibility</option>
+            </optgroup>
+            <optgroup label="Day 2 — Tuesday, 16 June">
+              <option>POCSO, JJ Act & POSH (Pre-Primary to VIII)</option>
+              <option>Emotional Intelligence in the Classroom</option>
+              <option>Lesson Plans & Pedagogy for Pre-Primary</option>
+              <option>Effective Communication for Teachers</option>
+              <option>Special Education Needs (IX to XII)</option>
+            </optgroup>
+            <optgroup label="Day 3 — Wednesday, 17 June">
+              <option>Lesson Plans, TLMs — Pre-Primary</option>
+              <option>Computational Thinking in Education (Plenary)</option>
+              <option>Microteaching & Holistic Report Cards</option>
+              <option>Art Integrated Learning</option>
+              <option>Non-Verbal Communication & Body Language</option>
+            </optgroup>
+            <optgroup label="Day 4 — Thursday, 18 June">
+              <option>The Art of Storytelling — Pre-Primary</option>
+              <option>Happy Classrooms — Positive Learning Environments</option>
+              <option>Learning Management Systems (LMS)</option>
+              <option>AI Tools in Education (IX–XII)</option>
+              <option>Mathematics Activity-Based Learning (I–V)</option>
+              <option>Value Education</option>
+              <option>Stress Management for Teachers</option>
+            </optgroup>
+            <optgroup label="Day 5 — Friday, 19 June">
+              <option>Artificial Intelligence in Education (Plenary)</option>
+              <option>Happy Teacher, Happy Classroom</option>
+              <option>AI Tools in Education (I–V)</option>
+              <option>Kaushal Bodh — Vocational Awareness & Skill Education</option>
+              <option>Mathematics Activity-Based Learning (VI–VIII)</option>
+              <option>School Health & Wellness Programme</option>
+            </optgroup>
+            <optgroup label="Day 6 — Saturday, 20 June">
+              <option>AI Tools in Education — Pre-Primary</option>
+              <option>Learning Outcomes & Pedagogy</option>
+              <option>Storytelling as Pedagogy (VI–VIII)</option>
+              <option>Future Careers & Subject Choices</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Resource Person / Trainer <span class="req">*</span></label>
+          <input class="field-input" type="text" required placeholder="Trainer's full name" name="trainer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION B — RUBRIC -->
+  <div class="card">
+    <div class="card-header navy">
+      <span>B</span> Session Evaluation Rubric — Rate 1 to 5 per criterion
+    </div>
+    <div class="card-body">
+      <div class="rubric-hint">
+        ✦ Tick <strong>ONE option</strong> per row &nbsp;|&nbsp;
+        <span style="color:var(--red);font-weight:600;">1 = Poor</span> &nbsp;
+        <span style="color:var(--orange);font-weight:600;">2 = Fair</span> &nbsp;
+        <span style="color:var(--yellow);font-weight:600;">3 = Good</span> &nbsp;
+        <span style="color:var(--green);font-weight:600;">4 = Very Good</span> &nbsp;
+        <span style="color:var(--blue);font-weight:600;">5 = Excellent</span> &nbsp;|&nbsp;
+        Maximum Score = 50
+      </div>
+
+      <div id="rubricItems"></div>
+
+      <!-- SCORE DISPLAY -->
+      <div class="score-display" id="scoreDisplay">
+        <div>
+          <div class="score-big"><span id="scoreNum">0</span><span class="score-denom">/50</span></div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-bar"><div class="score-bar-fill" id="scoreBarFill"></div></div>
+          <div class="score-pct">Score: <span id="scorePctTxt">0</span>% &nbsp;|&nbsp; Grade: <strong id="scoreGrade">—</strong></div>
+        </div>
+        <div class="score-grade-badge" id="scoreGradeBadge"></div>
+      </div>
+
+      <div class="grade-scale" style="margin-top:14px;">
+        <div class="grade-chip gc-a-plus">46–50<br><strong>A+ Outstanding</strong></div>
+        <div class="grade-chip gc-a">40–45<br><strong>A Excellent</strong></div>
+        <div class="grade-chip gc-b">33–39<br><strong>B Good</strong></div>
+        <div class="grade-chip gc-c">25–32<br><strong>C Satisfactory</strong></div>
+        <div class="grade-chip gc-d">Below 25<br><strong>D Needs Work</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION D — QUICK CHECK -->
+  <div class="card">
+    <div class="card-header blue">
+      <span>C</span> Quick Check — Yes / No / Partially
+    </div>
+    <div class="card-body" style="padding:0;">
+      <div id="quickCheck"></div>
+    </div>
+  </div>
+
+  <!-- SECTION E — OPEN ENDED -->
+  <div class="card">
+    <div class="card-header purple">
+      <span>D</span> Open-Ended Reflections
+    </div>
+    <div class="card-body">
+      <div id="openEnded"></div>
+    </div>
+  </div>
+
+  <!-- SECTION F — TRAINER RATING -->
+  <div class="card">
+    <div class="card-header amber">
+      <span>E</span> Trainer Effectiveness Summary — Rate 1 to 5
+    </div>
+    <div class="card-body" style="padding:0 0 4px;">
+      <div id="trainerRating"></div>
+    </div>
+  </div>
+
+  <!-- SECTION G — DECLARATION -->
+  <div class="card">
+    <div class="card-header green">
+      <span>F</span> Declaration
+    </div>
+    <div class="card-body">
+      <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;">
+        <input type="checkbox" id="declareCheck" style="width:18px;height:18px;margin-top:2px;accent-color:var(--teal);flex-shrink:0;" required>
+        <span style="font-size:14px;color:var(--text);line-height:1.6;">
+          I confirm that this feedback is filled <strong>honestly</strong>, based on my personal experience of the session. I understand it will be used purely for <strong>programme improvement and trainer recognition</strong>, and will remain confidential.
+        </span>
+      </label>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-section">
+    <button type="submit" class="submit-btn">
+      ✦ Submit Feedback
+    </button>
+    <p style="margin-top:12px;font-size:12px;color:var(--muted);">Please submit before leaving the session hall</p>
+  </div>
+
+</div>
+</form>
+
+<!-- SUCCESS SCREEN -->
+<div class="success-screen" id="successScreen">
+  <div class="success-card">
+    <div class="success-icon">✓</div>
+    <div class="success-title">Feedback Submitted!</div>
+    <p class="success-sub">
+      Thank you for your valuable feedback.<br>
+      Your response has been recorded and will be reviewed by the ECMS Academic Development Cell.<br><br>
+      <strong style="color:var(--teal);">ECMS FDP-2026 &nbsp;|&nbsp; CBP-2026 &nbsp;|&nbsp; MPS Schools, Jaipur</strong>
+    </p>
+    <button onclick="resetForm()" style="margin-top:24px;padding:12px 28px;border-radius:20px;border:none;background:var(--teal);color:#fff;font-size:14px;font-weight:600;cursor:pointer;">
+      Fill Another Response
+    </button>
+  </div>
+</div>
+
+<div class="form-footer">
+  ECMS Academic Development Cell &nbsp;|&nbsp; FDP-2026 &nbsp;|&nbsp; www.ecmsjaipur.com
+  <br>This form is confidential and for internal use only.
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const rubricData = [
+  { id:'r1', title:'Content Relevance',             sub:'Was the session topic relevant to your teaching role and current classroom needs?',
+    descs:['Topic had no relevance to my work','Slightly relevant, limited application','Moderately relevant to my practice','Largely relevant, directly applicable','Highly relevant, immediately actionable'] },
+  { id:'r2', title:'Clarity of Presentation',       sub:'Was the content explained in a clear, logical, and easy-to-understand manner?',
+    descs:['Confusing, unclear throughout','Difficult to follow at times','Reasonably clear, some gaps','Clear and well-structured mostly','Exceptionally clear, very well organised'] },
+  { id:'r3', title:"Trainer's Expertise & Knowledge",sub:'Did the trainer demonstrate sufficient knowledge of the subject?',
+    descs:['Lacked subject knowledge','Basic knowledge, limited depth','Adequate knowledge presented','Strong expertise demonstrated','Outstanding expertise, inspiring depth'] },
+  { id:'r4', title:'Engagement & Interactivity',    sub:'Was the session interactive, stimulating, and participative?',
+    descs:['Purely lecture, no interaction','Minimal interaction attempted','Some activities, partially engaging','Good interaction, kept interest','Highly engaging, maximum participation'] },
+  { id:'r5', title:'Practical Applicability',       sub:'Can you apply what you learned directly in your classroom / school?',
+    descs:['Nothing practically usable','One or two minor points usable','Some ideas applicable','Several strategies I will use','Comprehensive toolkit ready to use'] },
+  { id:'r6', title:'Time Management',               sub:'Was the session paced well and completed within the allotted time?',
+    descs:['Very poor pacing, overran heavily','Pacing issues, slightly over/under','Mostly within time, minor issues','Good pacing, mostly on schedule','Perfect pacing, optimal use of time'] },
+  { id:'r7', title:'Use of Examples & Illustrations',sub:'Did the trainer use relevant examples, case studies, or demonstrations?',
+    descs:['No examples or illustrations used','Examples given but not relevant','Some relevant examples used','Good examples, enhanced learning','Excellent, very relatable examples'] },
+  { id:'r8', title:'Materials & Resources Provided', sub:'Were handouts, presentations, or reference materials useful and adequate?',
+    descs:['No materials provided','Materials provided but poor quality','Adequate materials, somewhat useful','Good materials, well-presented','Excellent, comprehensive resource pack'] },
+  { id:'r9', title:'Alignment with My Professional Needs',sub:'Did this session address a genuine learning need or gap in your practice?',
+    descs:['Did not address any gap','Tangentially addressed a need','Partially addressed my needs','Clearly addressed a key need','Precisely addressed a critical gap'] },
+  { id:'r10',title:'Overall Session Rating',         sub:'Your holistic assessment of this session.',
+    descs:['Very disappointing session','Below expectations','Met basic expectations','Good, exceeded some expectations','Outstanding, exceeded all expectations'] },
+];
+
+const quickCheckData = [
+  'Did the trainer connect the topic to real classroom situations?',
+  'Were the learning objectives of this session clearly communicated?',
+  'Did the session allow sufficient time for questions and discussion?',
+  'Would you recommend this session to teachers from other schools?',
+  'Do you feel more confident in this topic area after this session?',
+  'Was the venue, seating, and AV arrangement adequate for this session?',
+  'Did you receive sufficient materials / references for follow-up learning?',
+  'Would you like a deeper / advanced follow-up session on this topic?',
+];
+
+const openEndedData = [
+  { id:'e1', q:'What was the SINGLE MOST VALUABLE learning from this session for you?' },
+  { id:'e2', q:'What ONE THING will you implement in your classroom within the next two weeks? (Be specific — name the strategy and the class/subject.)' },
+  { id:'e3', q:'What aspect of this session could have been IMPROVED? (Content / Delivery / Time / Materials / Interaction — please specify)' },
+  { id:'e4', q:'Is there a related topic you wish had been covered that was NOT addressed in this session?' },
+  { id:'e5', q:'Any other comments, suggestions, or appreciation for the trainer or organisers?' },
+];
+
+const trainerData = [
+  { code:'T1', label:'Body Language & Eye Contact' },
+  { code:'T2', label:'Command over Language (Hindi / English)' },
+  { code:'T3', label:'Ability to Simplify Complex Concepts' },
+  { code:'T4', label:'Responsiveness to Questions' },
+  { code:'T5', label:'Energy Level & Enthusiasm' },
+  { code:'T6', label:'Real-World Relevance of Content' },
+];
+
+const gradeLabels = ['Poor','Fair','Good','Very Good','Excellent'];
+const ratingColors = ['r1','r2','r3','r4','r5'];
+
+// ── RENDER RUBRIC ─────────────────────────────────────────────────────────────
+function renderRubric() {
+  const container = document.getElementById('rubricItems');
+  rubricData.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'rubric-item';
+    let optionsHtml = '';
+    for (let i = 1; i <= 5; i++) {
+      optionsHtml += `
+        <div class="rubric-option r${i}">
+          <input type="radio" name="${item.id}" id="${item.id}_${i}" value="${i}" onchange="updateScore()">
+          <label for="${item.id}_${i}">
+            <span class="rubric-score">${i}</span>
+            <span class="rubric-grade">${gradeLabels[i-1]}</span>
+            <span class="rubric-desc">${item.descs[i-1]}</span>
+          </label>
+        </div>`;
+    }
+    div.innerHTML = `
+      <div class="rubric-item-header">
+        <div class="rubric-num">${idx+1}</div>
+        <div>
+          <div class="rubric-title">${item.title}</div>
+          <div class="rubric-subtitle">${item.sub}</div>
+        </div>
+      </div>
+      <div class="rubric-options">${optionsHtml}</div>`;
+    container.appendChild(div);
+  });
+}
+
+// ── RENDER QUICK CHECK ────────────────────────────────────────────────────────
+function renderQuickCheck() {
+  const container = document.getElementById('quickCheck');
+  quickCheckData.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'qcheck-item';
+    div.innerHTML = `
+      <div><span class="qcheck-num">${i+1}.</span><span class="qcheck-text">${q}</span></div>
+      <div class="qcheck-btns">
+        <button type="button" class="qcheck-btn yes"  onclick="toggleQCheck(this,'qc${i}','yes')">Yes</button>
+        <button type="button" class="qcheck-btn no"   onclick="toggleQCheck(this,'qc${i}','no')">No</button>
+        <button type="button" class="qcheck-btn part" onclick="toggleQCheck(this,'qc${i}','part')">Partially</button>
+      </div>
+      <input type="hidden" name="qc${i}" id="qc${i}" value="">`;
+    container.appendChild(div);
+  });
+}
+
+function toggleQCheck(btn, name, val) {
+  const parent = btn.closest('.qcheck-btns');
+  parent.querySelectorAll('.qcheck-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(name).value = val;
+  updateProgress();
+}
+
+// ── RENDER OPEN ENDED ─────────────────────────────────────────────────────────
+function renderOpenEnded() {
+  const container = document.getElementById('openEnded');
+  openEndedData.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'open-item';
+    div.innerHTML = `
+      <div class="open-label">
+        <span class="open-badge">${item.id.toUpperCase()}</span>
+        ${item.q}
+      </div>
+      <textarea class="field-textarea" name="${item.id}" placeholder="Write your response here..." rows="3"></textarea>`;
+    container.appendChild(div);
+  });
+}
+
+// ── RENDER TRAINER RATING ─────────────────────────────────────────────────────
+function renderTrainerRating() {
+  const container = document.getElementById('trainerRating');
+  trainerData.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'trainer-item';
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+      stars += `<button type="button" class="star-btn s${i}" onclick="setStarRating('${item.code}',${i},this.closest('.star-group'))">${i}</button>`;
+    }
+    div.innerHTML = `
+      <div class="trainer-code">${item.code}</div>
+      <div class="trainer-label">${item.label}</div>
+      <div class="star-group">${stars}</div>
+      <input type="hidden" name="trainer_${item.code}" id="trainer_${item.code}" value="">`;
+    container.appendChild(div);
+  });
+}
+
+function setStarRating(code, val, group) {
+  group.querySelectorAll('.star-btn').forEach((b,i) => {
+    b.classList.remove('a');
+    if (i < val) b.classList.add('a');
+  });
+  document.getElementById('trainer_'+code).value = val;
+  updateProgress();
+}
+
+// ── SCORE ─────────────────────────────────────────────────────────────────────
+function updateScore() {
+  let total = 0;
+  rubricData.forEach(item => {
+    const checked = document.querySelector(`input[name="${item.id}"]:checked`);
+    if (checked) total += parseInt(checked.value);
+  });
+  document.getElementById('scoreNum').textContent = total;
+  const pct = Math.round(total/50*100);
+  document.getElementById('scorePctTxt').textContent = pct;
+  document.getElementById('scoreBarFill').style.width = pct+'%';
+
+  let grade='—', badgeCls='';
+  if(total>=46){grade='A+ Outstanding';badgeCls='background:var(--blue-light);color:var(--blue)';}
+  else if(total>=40){grade='A Excellent';badgeCls='background:var(--green-light);color:var(--green)';}
+  else if(total>=33){grade='B Good';badgeCls='background:var(--yellow-light);color:var(--yellow)';}
+  else if(total>=25){grade='C Satisfactory';badgeCls='background:var(--orange-light);color:var(--orange)';}
+  else if(total>0){grade='D Needs Improvement';badgeCls='background:var(--red-light);color:var(--red)';}
+  document.getElementById('scoreGrade').textContent = grade;
+  const badge = document.getElementById('scoreGradeBadge');
+  if(total>0){badge.style.cssText=badgeCls+';display:inline-flex;padding:6px 18px;border-radius:20px;font-size:14px;font-weight:700;';badge.textContent=grade;}
+  else{badge.style.display='none';}
+  updateProgress();
+}
+
+// ── PROGRESS ──────────────────────────────────────────────────────────────────
+function updateProgress() {
+  const total = 30; // approx number of interactions
+  let filled = 0;
+  document.querySelectorAll('input[type="radio"]:checked').length > 0 && (filled += document.querySelectorAll('input[type="radio"]:checked').length);
+  document.querySelectorAll('input[type="hidden"]').forEach(h => { if(h.value) filled++; });
+  document.querySelectorAll('textarea').forEach(t => { if(t.value.trim()) filled++; });
+  document.querySelectorAll('input[type="text"], input[type="date"], select').forEach(f => { if(f.value) filled++; });
+  const pct = Math.min(100, Math.round(filled/total*100));
+  document.getElementById('progressFill').style.width = pct+'%';
+  document.getElementById('progressPct').textContent = pct+'%';
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+function submitForm(e) {
+  e.preventDefault();
+  let rubricFilled = true;
+  rubricData.forEach(item => {
+    if (!document.querySelector(`input[name="${item.id}"]:checked`)) rubricFilled = false;
+  });
+  if(!rubricFilled){
+    alert('Please rate all 10 criteria in Section B before submitting.');
+    document.getElementById('rubricItems').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  document.getElementById('feedbackForm').style.display = 'none';
+  document.getElementById('progressWrap').style.display = 'none';
+  document.getElementById('successScreen').style.display = 'block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function resetForm() {
+  document.getElementById('feedbackForm').reset();
+  document.getElementById('feedbackForm').style.display = 'block';
+  document.getElementById('progressWrap').style.display = 'block';
+  document.getElementById('successScreen').style.display = 'none';
+  document.getElementById('scoreNum').textContent = '0';
+  document.getElementById('scoreBarFill').style.width = '0%';
+  document.getElementById('scorePctTxt').textContent = '0';
+  document.getElementById('scoreGrade').textContent = '—';
+  document.getElementById('scoreGradeBadge').style.display = 'none';
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('progressPct').textContent = '0%';
+  document.querySelectorAll('.qcheck-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.star-btn').forEach(b=>b.classList.remove('a'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderRubric();
+renderQuickCheck();
+renderOpenEnded();
+renderTrainerRating();
+
+// Track input changes
+document.getElementById('feedbackForm').addEventListener('input', updateProgress);
+document.getElementById('feedbackForm').addEventListener('change', updateProgress);
+</script>
+</body>
+</html>
