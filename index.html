@@ -415,6 +415,8 @@
     font-size: 12px; color: var(--muted);
   }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -665,10 +667,116 @@
       Your response has been recorded and will be reviewed by the ECMS Academic Development Cell.<br><br>
       <strong style="color:var(--teal);">ECMS FDP-2026 &nbsp;|&nbsp; CBP-2026 &nbsp;|&nbsp; MPS Schools, Jaipur</strong>
     </p>
-    <button onclick="resetForm()" style="margin-top:24px;padding:12px 28px;border-radius:20px;border:none;background:var(--teal);color:#fff;font-size:14px;font-weight:600;cursor:pointer;">
-      Fill Another Response
-    </button>
+    <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button id="certDownloadBtn" onclick="downloadCertificate()" style="padding:14px 32px;border-radius:20px;border:none;background:linear-gradient(135deg,#00695C,#00897B);color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,137,123,.35);display:flex;align-items:center;gap:8px;">
+        ⬇ Download Certificate
+      </button>
+      <button onclick="resetForm()" style="padding:14px 28px;border-radius:20px;border:1.5px solid var(--teal);background:#fff;color:var(--teal);font-size:14px;font-weight:600;cursor:pointer;">
+        Fill Another Response
+      </button>
+    </div>
   </div>
+</div>
+
+<!-- HIDDEN CERTIFICATE (rendered off-screen for PDF export) -->
+<div id="certificateWrap" style="position:absolute;left:0;top:-9999px;opacity:0;pointer-events:none;">
+<div id="certificateEl" style="width:1122px;height:794px;background:#fff;font-family:Arial,Helvetica,sans-serif;box-sizing:border-box;display:flex;flex-direction:column;">
+
+  <!-- HEADER -->
+  <div style="background:#004D40;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;position:relative;flex-shrink:0;">
+    <!-- Logo -->
+    <img src="./ecms-logo.png" crossorigin="anonymous" style="width:82px;height:82px;object-fit:contain;flex-shrink:0;">
+    <!-- Org name -->
+    <div style="text-align:center;color:#fff;flex:1;padding:0 18px;">
+      <div style="font-size:14px;font-weight:700;margin-bottom:3px;">शिक्षा समिति — महेश्वरी समाज, जयपुर</div>
+      <div style="font-size:17px;font-weight:800;letter-spacing:0.3px;">THE EDUCATION COMMITTEE OF THE MAHESHWARI SAMAJ (Society)</div>
+      <div style="font-size:10px;font-style:italic;opacity:0.8;margin-top:3px;">JAIPUR, RAJASTHAN | www.ecmsjaipur.com</div>
+    </div>
+    <!-- Serial / Date -->
+    <div style="text-align:right;flex-shrink:0;">
+      <div style="font-size:10px;font-weight:600;color:#FF8A80;">Serial No: <span style="color:#FFCDD2;">CMS/CBP/2026/____</span></div>
+    </div>
+    <!-- Gold bottom line -->
+    <div style="position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#D4A04A,#FAD080,#D4A04A);"></div>
+  </div>
+
+  <!-- TITLE -->
+  <div style="text-align:center;padding:18px 40px 10px;flex-shrink:0;">
+    <div style="font-size:23px;font-weight:700;color:#1A3C6E;letter-spacing:0.2px;">e-Certificate of Participation in Faculty Development Programme-2026</div>
+    <div style="height:3px;background:linear-gradient(90deg,transparent,#00897B 30%,#D4A04A 50%,#00897B 70%,transparent);margin-top:10px;border-radius:2px;"></div>
+  </div>
+
+  <!-- BODY -->
+  <div style="padding:20px 44px 16px;flex:1;display:flex;flex-direction:column;overflow:hidden;">
+
+    <!-- Certifying line -->
+    <div style="font-size:14px;font-weight:600;color:#1A1A1A;display:flex;align-items:baseline;gap:6px;flex-wrap:nowrap;margin-bottom:8px;">
+        <span style="white-space:nowrap;">This is to certify that Dr/ Ms/ Mr .</span>
+        <span id="cert-name" style="border-bottom:1.5px solid #1A1A1A;flex:1;min-width:200px;padding-bottom:1px;">&nbsp;</span>
+        <span style="white-space:nowrap;margin-left:6px;">School</span>
+        <span id="cert-school" style="border-bottom:1.5px solid #1A1A1A;flex:1;min-width:140px;padding-bottom:1px;">&nbsp;</span>
+      </div>
+      <div style="font-size:14px;font-weight:600;color:#1A1A1A;margin-bottom:14px;">has attended the Offline session with the following details: -</div>
+
+      <!-- Details table -->
+      <table style="width:100%;border-collapse:collapse;font-size:13px;border:1.5px solid #888;">
+        <tr>
+          <td style="border:1.5px solid #888;padding:12px 14px;font-weight:700;background:#fff;width:14%;">Date</td>
+          <td id="cert-date" style="border:1.5px solid #888;padding:12px 14px;font-weight:700;color:#C00000;background:#D9EEF3;width:16%;"></td>
+          <td style="border:1.5px solid #888;padding:12px 14px;font-weight:700;background:#fff;width:9%;">Time</td>
+          <td id="cert-time" style="border:1.5px solid #888;padding:12px 14px;font-weight:700;color:#C00000;background:#D9EEF3;width:22%;"></td>
+          <td style="border:1.5px solid #888;padding:12px 14px;font-weight:700;background:#fff;width:16%;">Programme Code</td>
+          <td style="border:1.5px solid #888;padding:12px 14px;font-weight:700;color:#C00000;background:#D9EEF3;">ECMS/CBP – 2026</td>
+        </tr>
+        <tr>
+          <td style="border:1.5px solid #888;padding:12px 14px;font-weight:700;background:#fff;">Topic / Theme</td>
+          <td id="cert-topic" colspan="5" style="border:1.5px solid #888;padding:12px 14px;font-weight:700;color:#C00000;background:#D9EEF3;"></td>
+        </tr>
+        <tr>
+          <td style="border:1.5px solid #888;padding:12px 14px;font-weight:700;background:#fff;">Name Of Resource Person</td>
+          <td id="cert-trainer" colspan="5" style="border:1.5px solid #888;padding:12px 14px;font-weight:700;color:#C00000;background:#D9EEF3;"></td>
+        </tr>
+      </table>
+
+      <!-- Paragraph -->
+      <div style="font-size:13px;margin-top:20px;line-height:1.7;color:#1A1A1A;">
+        This Faculty Development Programme (FDP) was organised by <strong style="color:#00695C;">ECMS Training &amp; Development Cell, The Education Committee of The Maheshwari Samaj (Society), Jaipur.</strong>
+      </div>
+
+    <!-- Spacer -->
+    <div style="height:60px;"></div>
+
+    <!-- Signatures -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;">
+      <div>
+        <img src="./President Umesh Sir.jpg.jpeg" crossorigin="anonymous" style="height:52px;object-fit:contain;display:block;">
+        <div style="font-size:13px;font-weight:700;color:#C0392B;">Mr. Umesh Soni</div>
+        <div style="font-size:12px;color:#1A1A1A;">President</div>
+        <div style="font-size:12px;color:#1A1A1A;">ECMS, Jaipur</div>
+      </div>
+      <div style="text-align:center;">
+        <img src="./Vice President Nirmal Sir.jpg.jpeg" crossorigin="anonymous" style="height:52px;object-fit:contain;display:block;margin:0 auto;">
+        <div style="font-size:13px;font-weight:700;color:#C0392B;">Mr. Nirmal Dargar</div>
+        <div style="font-size:12px;color:#1A1A1A;">Vice- President (Education)</div>
+        <div style="font-size:12px;color:#1A1A1A;">ECMS, Jaipur</div>
+      </div>
+      <div style="text-align:right;">
+        <img src="./General Sec. Kamal Somani Signature (1).jpg.jpeg" crossorigin="anonymous" style="height:52px;object-fit:contain;display:block;margin-left:auto;">
+        <div style="font-size:13px;font-weight:700;color:#C0392B;">Mr. Kamal Somani</div>
+        <div style="font-size:12px;color:#1A1A1A;">General Secretary</div>
+        <div style="font-size:12px;color:#1A1A1A;">ECMS , Jaipur</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div style="background:#004D40;padding:9px 22px;text-align:center;color:#fff;flex-shrink:0;">
+    <div style="font-size:10.5px;font-weight:700;letter-spacing:0.2px;">ECMS Training &amp; Development Cell | Faculty Development Programme | CBP-2026 | www.ecmsjaipur.com</div>
+    <div style="font-size:9.5px;font-style:italic;opacity:0.8;margin-top:2px;">The Education Committee of The Maheshwari Samaj (Society), Jaipur | CBSE Affiliated Schools | विद्या ददाति विनयम्</div>
+  </div>
+
+</div>
 </div>
 
 <div class="form-footer">
@@ -677,6 +785,8 @@
 </div>
 
 <script>
+let certData = null;
+
 // ── DATA ──────────────────────────────────────────────────────────────────────
 const rubricData = [
   { id:'r1', title:'Content Relevance',             sub:'Was the session topic relevant to your teaching role and current classroom needs?',
@@ -971,6 +1081,8 @@ async function submitForm(e) {
       )?.value || "";
   });
 
+  certData = data;
+
   try {
 
     const response = await fetch(
@@ -1024,6 +1136,60 @@ function resetForm() {
   document.querySelectorAll('.qcheck-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.star-btn').forEach(b=>b.classList.remove('a'));
   window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── CERTIFICATE ───────────────────────────────────────────────────────────────
+async function downloadCertificate() {
+  if (!certData) { alert('No submission data found. Please submit the form first.'); return; }
+
+  const btn = document.getElementById('certDownloadBtn');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ Generating...';
+
+  // Populate certificate fields
+  const [y, m, d] = (certData.date || '').split('-');
+  const dateFormatted = (y && m && d) ? `${d}.${m}.${y}` : certData.date || '';
+
+  const sessionVal = certData.session || '';
+  const time = sessionVal.includes('Session 1') ? '8:30 A.M – 11:00 A.M' : '11:40 A.M – 2:10 P.M';
+
+  document.getElementById('cert-name').textContent    = ' ' + (certData.name    || '');
+  document.getElementById('cert-school').textContent  = ' ' + (certData.school  || '');
+  document.getElementById('cert-date').textContent    = dateFormatted;
+  document.getElementById('cert-time').textContent    = time;
+  document.getElementById('cert-topic').textContent   = certData.topic   || '';
+  document.getElementById('cert-trainer').textContent = certData.trainer || '';
+
+  // Bring into render range for html2canvas
+  const wrap = document.getElementById('certificateWrap');
+  wrap.style.opacity = '1';
+
+  try {
+    const canvas = await html2canvas(document.getElementById('certificateEl'), {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      logging: false,
+      backgroundColor: '#ffffff'
+    });
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+    const pdfW = pdf.internal.pageSize.getWidth();
+    const pdfH = pdf.internal.pageSize.getHeight();
+    pdf.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH);
+
+    const safeName = (certData.name || 'Participant').replace(/\s+/g, '_');
+    pdf.save(`ECMS_FDP_Certificate_${safeName}.pdf`);
+  } catch(err) {
+    console.error(err);
+    alert('Could not generate certificate. Please try again.');
+  }
+
+  wrap.style.opacity = '0';
+  btn.disabled = false;
+  btn.innerHTML = '⬇ Download Certificate';
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
